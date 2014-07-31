@@ -5,16 +5,6 @@
 
 include "config.php";
 
-$mysqli = new mysqli($settings['database']['hostname'], $settings['database']['username'], $settings['database']['password'], $settings['database']['database']);
-
-/* check connection */ 
-if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
-}
-
-$mysqli->query("set names utf8;");
-
 //print_r($_SERVER);
 
 //$result = $mysqli->query("SELECT * FROM ips LIMIT 10");
@@ -60,11 +50,10 @@ $reportedby = $_SERVER['REMOTE_ADDR'];
        $allowed = 1; # office.yourdomain.com
        break;
   }
-  if (($allowed) and ($ipaddress != "")) {
-	$query = "insert into ips set ipaddress='{$ipaddress}', reportedby='{$reportedby}', attacknotes='{$notes}', b_or_w='{$blackorwhite}', dateadded=now(), updated=now();";
-	$mysqli->query($query);
-//      write_ip($ipaddress, $notes, $blackorwhite);
-  }
+if (($allowed) and ($ipaddress != "")) {
+    $query = "insert into ips set ipaddress='{$ipaddress}', reportedby='{$reportedby}', attacknotes='{$notes}', b_or_w='{$blackorwhite}', dateadded=now(), updated=now();";
+    $mysqli->query($query);
+}
 
 /* close connection */
 mysqli_close($link);
