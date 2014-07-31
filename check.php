@@ -44,5 +44,8 @@ if ($check == true) {
 		</tr>
 		</table>
 	</form>
+	<p>
+		<a href="index.php">Home</a>.
+	</p>
 </body>
 </html>
