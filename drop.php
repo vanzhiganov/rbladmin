@@ -53,7 +53,7 @@ $reportedby = $_SERVER['REMOTE_ADDR'];
     case "213.141.131.101":
        $allowed = 1; # mail2.yourdomain.com
        break;
-    case "72.34.235.2":
+    case "84.253.104.246":
        $allowed = 1; # mail3.yourdomain.com
        break;
     case "39.227.237.20":
