@@ -101,7 +101,10 @@ if ($check == true) {
 </tr>
 <tr>
   <td align="right" valign="top">&nbsp;</td>
-  <td align="left"><input type="submit" name="Submit" value="Submit"></td>
+  <td align="left">
+    <input type="submit" name="Submit" value="Submit">
+    <input type="reset" />
+  </td>
 </tr>
 </table>
 </form>
