@@ -5,8 +5,6 @@
 
 include "config.php";
 
-//print_r($_SERVER);
-
 //$result = $mysqli->query("SELECT * FROM ips LIMIT 10");
 //print_r($result);
 
@@ -19,7 +17,7 @@ $reportedby = $_SERVER['REMOTE_ADDR'];
         $ipaddress = $_POST['ipaddress'];
     }
     if (isset($_POST['notes'])) {
-        $notes = $_POST['notes'];
+        $notes = addslashes($_POST['notes']);
     }
     if (isset($_POST['blackorwhite'])) {
         $blackorwhite = $_POST['blackorwhite'];
@@ -52,7 +50,7 @@ $reportedby = $_SERVER['REMOTE_ADDR'];
   }
 if (($allowed) and ($ipaddress != "")) {
     $query = "insert into ips set ipaddress='{$ipaddress}', reportedby='{$reportedby}', attacknotes='{$notes}', b_or_w='{$blackorwhite}', dateadded=now(), updated=now();";
-    $mysqli->query($query);
+    $mysqli->query($query) or die ($mysqli->error);
 }
 
 /* close connection */
@@ -65,6 +63,28 @@ mysqli_close($link);
 <body>
 <h2>RBL Drop</h2>
 <h3>Relay Blacklist</h3>
+<p><?php echo $_SERVER['REMOTE_ADDR']; ?></p>
+<?php
+$check = false;
+$check_result = 0;
+
+if (isset($_POST['ipaddress'])) {
+	$check = true;
+	$ipaddress = $_POST['ipaddress'];
+	$result = $mysqli->query("SELECT COUNT(*) FROM `ips` WHERE ipaddress = '".$ipaddress."'");
+	$row = $result->fetch_row();
+	$check_result = $row[0];
+}
+?>
+<?php
+if ($check == true) {
+	if ($check_result == 0) {
+		print "<p style='color: green'>IP address {$ipaddress}: OK</p>";
+	} else {
+		print "<p style='color: red'>IP address: {$ipaddress} in RBL</p>";
+	}
+}
+?>
 <form action="drop.php" method="post">
 <table border="0">
 <tr>
